@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/Place.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/Place.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * place instances index
+ * @type {Object}
+ */
+Kepler.placesById = {};
+
+/**
+ * create new Place instance or return it if exists
+ * @param  {String} id Mongo Id
+ * @return {Place}   K.Place instance
+ */	
+Kepler.placeById = function(id) {
+	//check(id, String);
+	if(!id) return null;
+	
+	if(id &amp;&amp; !K.placesById['id_'+id] &amp;&amp; K.findPlaceById(id).fetch()[0])
+		K.placesById['id_'+id] = new K.Place(id);
+	
+	return K.placesById['id_'+id] || null;
+};
+
+/**
+ * @class  Model for instantiate places
+ * @param  {String} placeId place Mongo ID
+ * @return {Object} place instance
+ */
+Kepler.Place = Class.extend({
+
+	id: null,
+	type: 'place',
+	template: 'item_place',
+	templatePanel: 'panelPlace',	
+	templatePopup: 'popupPlace',
+	templateTooltip: 'tooltipPlace',
+	templateMarker: 'markerPlace',
+	classMarker: '',
+	data: {},
+	init: function(placeId) {
+
+		var self = this;
+
+		self.id = placeId;
+
+		self._dep = new Tracker.Dependency();
+
+	//TODO replace with Reactive Var!!!
+
+		self.rData = function() {
+			self._dep.depend();
+			return self;
+		};
+
+		self.update = function(comp) {	//sincronizza istanza con dati nel db
+
+			self.data = K.findPlaceById(self.id).fetch()[0];
+		
+			//TODO rewrite loading data into place instance!
+			_.extend(self, self.data);
+
+			if(self.loc) {
+				
+				self.buildMarker();
+
+				K.Map.addItem(self);
+
+				if(self.marker) {
+					//TODO REFACT draw user track
+					//build self.polyline... and udate it each time
+					if(K.Map.ready()) {
+						L.polyline([self.marker.getLatLng(), self.loc], {
+							opacity:0.8, weight:3, dashArray: "1,6", color: self.color
+						})
+						.addTo(K.Map.layers.geojson);
+					}
+					self.marker.setLatLng(self.loc);
+				}
+			}
+
+			self._dep.changed();
+
+			return self;
+		};
+		
+		Tracker.autorun(self.update);
+	},
+
+	buildMarker: function() {
+		
+		var self = this;
+
+		var opts = K.settings.public.map;
+
+		//TODO move this in self.update
+		if(!opts.layerPlaces.enabled)
+			return null;
+
+		if(!self.marker) {
+			var opts = K.settings.public.map;
+			
+			self.icon = new L.NodeIcon({
+				/*conSize: new L.Point(opts.icon.iconSize),
+				iconAnchor: new L.Point(opts.icon.iconAnchor),
+				popupAnchor: new L.Point(opts.icon.popupAnchor),*/				
+				nodeHtml: L.DomUtil.create('div')
+			});
+
+			self.marker = new L.Marker(self.loc, {icon: self.icon});
+			self.marker.item = self;
+			self.marker.once('add', function(e) {
+
+				var marker = e.target;
+
+				if(Template[self.templateMarker])
+					Blaze.renderWithData(Template[self.templateMarker], self, self.icon.nodeHtml);
+
+				if(opts.popups.enabled) {
+
+					var divp = L.DomUtil.create('div');
+				
+					if(Template[self.templatePopup])
+						Blaze.renderWithData(Template[self.templatePopup], self.rData, divp);
+					
+					marker.bindPopup(divp.firstChild, opts.popups);
+					/* TODO disable tooltip if popup is open
+					 marker.on('popupopen', function(ee) {
+						var t = e.target.getTooltip();
+						ee.target.unbindTooltip()
+						console.log(t)
+					});*/
+				}
+				else {
+					marker.on('click', function(ee) {
+						Router.go('panelPlace',{placeId: self.id});
+					});
+				}
+
+				marker.on('dblclick', function(ee) {
+					Router.go('panelPlace',{placeId: self.id});
+				});
+				
+				if(opts.tooltips.enabled) {
+
+					var divt = L.DomUtil.create('div');
+
+					if(Template[self.templateTooltip])
+						Blaze.renderWithData(Template[self.templateTooltip], self.rData, divt);
+				
+					marker.bindTooltip(divt.firstChild, K.Map.options.tooltip);
+					/*	TODO marker.on('opentooltip', function(e) {
+
+					});*/
+				}
+			});
+		}
+		return self.marker;
+	},
+
+	showLoc: function() {		//TODO rename showLoc in showLoc
+		var self = this;
+		
+		self.buildMarker();
+
+		K.Map.showLoc(self.loc, function() {
+			Meteor.setTimeout(function() {
+				self.marker.openPopup();
+				self.icon.animate();
+			},200);
+		});
+	},
+
+	loadPanel: function() {
+		Router.go('panelPlace', {placeId: this.id });
+	},
+	
+	isOutdoor: function() {
+		return !this.indoor;
+	},
+
+	isCheckin: function() {
+		return K.Profile.data.checkin &amp;&amp; (K.Profile.data.checkin === this.id);
+	},
+
+	checkinsCount: function() {
+		this._dep.depend();
+		return this.checkins &amp;&amp; this.checkins.length;
+	}
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="Kepler.module_Plugin.html">Plugin</a></li><li><a href="Kepler.module_Profile.html">Profile</a></li><li><a href="module-filters.html">filters</a></li><li><a href="module-Map.html">Map</a></li><li><a href="module-schemas.html">schemas</a></li><li><a href="module-templates.html">templates</a></li></ul><h3>Classes</h3><ul><li><a href="Kepler.Place.html">Place</a></li><li><a href="Kepler.User.html">User</a></li></ul><h3>Namespaces</h3><ul><li><a href="Kepler.html">Kepler</a></li><li><a href="Kepler.Cache.html">Cache</a></li><li><a href="Kepler.Util.html">Util</a></li><li><a href="Util.Kepler.Util.geo.html">Kepler.Util.geo</a></li><li><a href="Util.Kepler.Util.humanize.html">Kepler.Util.humanize</a></li><li><a href="Util.Kepler.Util.sanitize.html">Kepler.Util.sanitize</a></li><li><a href="Util.Kepler.Util.valid.html">Kepler.Util.valid</a></li></ul><h3>Global</h3><ul><li><a href="global.html#K">K</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Feb 05 2019 17:19:18 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
