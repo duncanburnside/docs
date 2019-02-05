@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Util_humanize.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Util_humanize.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * humanize string methods
+ * @namespace
+ * @memberOf Util
+ */
+Kepler.Util.humanize = {
+	//TODO creare numberHuman da usare in bagde chekins e stars 2000 -> 2K 
+	
+	/**
+	 * return azimut angle
+	 * @param  {Number} ang  [description]
+	 * @param  {String} code [description]
+	 * @return {String}      [description]
+	 */
+	azimut: function(ang, code) {
+		ang = parseFloat(ang);
+		var texts = code ? "n,nne,ne,ene,e,ese,se,sse,s,ssw,sw,wsw,w,wnw,nw,nnw,n" : i18n('azimuth');
+		return ang ? texts.split(',')[Math.round(ang/22.5)] : '';
+	},
+	/**
+	 * time interval huamize in day,se,hours...
+	 * @param  {Number} sec [description]
+	 * @param  {Boolean} ago [description]
+	 * @return {String}     [description]
+	 */
+	time: function(sec, ago) {
+		//http://goo.gl/8DqYS
+		if(sec &amp;&amp; ago)
+			sec = (K.Util.time()/1000) - (sec/1000);
+
+		var y = Math.floor(sec / 31536000),
+			m = Math.floor(sec / 2629744),
+			d = Math.floor((sec % 31536000) / 86400),
+			h = Math.floor(((sec % 31536000) % 86400) / 3600),
+			i = Math.floor((((sec % 31536000) % 86400) % 3600) / 60),
+			s = Math.floor((((sec % 31536000) % 86400) % 3600) % 60),
+			ret = '';
+
+		if(y>0)
+			ret+=' '+y+i18n('year').split(',')[y>1?1:0];
+
+		if(y&lt;2 &amp;&amp; m>0)
+			ret+=' '+m+i18n('month').split(',')[m>1?1:0];
+
+		if(m&lt;2 &amp;&amp; d>0)
+			ret+=' '+d+i18n('day').split(',')[d>1?1:0];
+
+		if(d&lt;2 &amp;&amp; h>0)
+			ret+=' '+h+i18n('hour').split(',')[h>1?1:0];
+
+		if(d&lt;1) {
+			if(h&lt;1 &amp;&amp; i>0)
+				ret+=' '+i+i18n('minute').split(',')[i>1?1:0];
+						
+			if(i&lt;2 &amp;&amp; s>0 &amp;&amp; i&lt;1)
+				ret+=' '+s+i18n('second').split(',')[s>1?1:0];
+		}
+		
+		return ret;
+	},
+	/**
+	 * date having name of days and months
+	 * @param  {(String|Date|Number)} date  [description]
+	 * @param  {Boolean} short [description]
+	 * @return {String}       [description]
+	 */
+	date: function(date, short) {
+		
+		date = date || new Date();
+		short = short || false;
+		sep = sep || ' ';
+	
+		function fromDMY(all, d,m,y) {
+
+				var oggi = new Date(),
+					giorno = oggi.getDate(),
+					mese = oggi.getMonth()+1,
+					anno = oggi.getFullYear(),
+					months = i18n('months_name').split(','),
+					days = i18n('days_name').split(','),
+					days_near = i18n('days_near').split(','),
+					ret = '',
+					dweek = (new Date(y, m-1, d)).getDay();
+
+				var fulldate = d +sep+ months[parseInt(m)-1] + (y!=anno ? sep+y : '');
+
+				if(m==mese &amp;&amp; y==anno)
+				{
+					if( days_near[d-giorno+1] )
+						ret = days_near[d-giorno+1] + sep;
+					else{
+						ret = Math.abs(d-giorno)&lt;6 ? days[dweek]+sep : '';
+						ret += fulldate;
+					}
+				}
+				else
+					ret = fulldate;
+			
+				return ret;
+			}
+			
+		if(_.isNumber(date)) {
+			date = new Date(date)
+			return fromDMY(null, date.getDate(), date.getMonth()+1, date.getFullYear() );
+		}
+
+		else if(_.isString(date)) {
+			var m;
+			if(m = date.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/)) {
+				return fromDMY(null, m[1], m[2], m[3]);
+			}
+			else if(m = date.match(/^(\d{4})-(\d{1,2})-(\d{1,2}).*/)) {
+
+				return fromDMY(null, m[3], m[2], m[1]);
+			} else {
+				date = new Date(date);
+				return fromDMY(null, date.getDate(), date.getMonth()+1, date.getFullYear() );
+			}
+		}
+
+		else if(_.isDate(date))
+			return fromDMY(null, date.getDate(), date.getMonth()+1, date.getFullYear() );
+		else
+			return null;
+	},
+	/**
+	 * return distance in meters or kilometers
+	 * @param  {Number} d    [description]
+	 * @param  {Boolean} sign [description]
+	 * @return {String}      [description]
+	 */
+	distance: function(d, sign) {
+		sign = sign || false;
+		var len='',unit='',s='';
+		d= parseInt(d);
+		if(d &lt; 2000){
+			d = d.toFixed(0);
+			unit = 'm';
+		}else{
+			d = (d/1000).toFixed(1);
+			unit = 'km';
+		}
+		if(sign)
+			s = d>0 ? '+' : '';
+		return s + d +unit;
+	},
+	/**
+	 * file size in Byte,Mbyte,Giga
+	 * @param  {Number} bytes   [description]
+	 * @param  {Number} decimal [description]
+	 * @return {String}         [description]
+	 */
+	filesize: function(bytes, decimal) {
+		if (bytes === 0) return bytes;		
+		decimal = decimal || 1;
+		var sizes = ['Bytes','KB','MB','GB','TB'],
+			i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+		return Math.round(bytes / Math.pow(1024, i), decimal) + ' ' + sizes[i];
+	},
+	/**
+	 * string rappresent a geo location
+	 * @param  {Array} ll  [description]
+	 * @param  {Number} pre [description]
+	 * @param  {String} sep [description]
+	 * @return {String}     [description]
+	 */
+	loc: function (ll, pre, sep) {
+		sep = sep || ',';
+		pre = pre || 6;
+		if(K.Util.valid.loc(ll))
+			return parseFloat(ll[0]).toFixed(pre)+ sep +parseFloat(ll[1]).toFixed(pre);
+		else
+			return '';
+	}
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Kepler.Cache.html">Cache</a></li><li><a href="Kepler.filters.html">filters</a></li><li><a href="Kepler.Plugin.html">Plugin</a></li><li><a href="Kepler.schemas.html">schemas</a></li><li><a href="Kepler.templates.html">templates</a></li><li><a href="Kepler.Util.html">Util</a></li><li><a href="Util.Kepler.Util.geo.html">Kepler.Util.geo</a></li><li><a href="Util.Kepler.Util.humanize.html">Kepler.Util.humanize</a></li><li><a href="Util.Kepler.Util.sanitize.html">Kepler.Util.sanitize</a></li><li><a href="Util.Kepler.Util.valid.html">Kepler.Util.valid</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Feb 05 2019 14:45:02 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
