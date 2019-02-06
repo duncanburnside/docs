@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: Map</title>
+    <title>JSDoc: Source: lib/lib/Class.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,130 +17,96 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: Map</h1>
+    <h1 class="page-title">Source: lib/lib/Class.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//TODO https://github.com/jeromeetienne/microevent.js/blob/master/package.json
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Kepler wrapper for Leaflet map</div>
-        
+function extend(dest) {
+	var i, j, len, src;
 
-        
-            
+	for (j = 1, len = arguments.length; j &lt; len; j++) {
+		src = arguments[j];
+		for (i in src) {
+			dest[i] = src[i];
+		}
+	}
+	return dest;
+}
+/**
+ * Class powers the OOP facilities of the library.
+ * Thanks to John Resig and Dean Edwards for inspiration!
+ * @class
+ */
+Class = function(){};
+/**
+ * Extends the current class given the properties to be included.
+ * @param  {Object} props properties of new class
+ * @return {Object}       Returns a Javascript function that is a class constructor (to be called with `new`).
+ */
+Class.extend = function (props) {
 
+	// extended class with the new prototype
+	var NewClass = function () {
 
+		// call the constructor
+		if (this.init) {
+			this.init.apply(this, arguments);
+		}
+	};
 
+	// instantiate class without calling constructor
+	var F = function(){};
+	F.prototype = this.prototype;
 
+	var proto = new F();
+	proto.constructor = NewClass;
 
+	NewClass.prototype = proto;
 
+	//inherit parent's statics
+	for (var i in this) {
+		if (this.hasOwnProperty(i) &amp;&amp; i !== 'prototype') {
+			NewClass[i] = this[i];
+		}
+	}
+	// mix given properties into the prototype
+	extend(proto, props);
 
+	var parent = this;
 
+	/**
+	 * parent prototype
+	 * @type {Function}
+	 */
+	NewClass.__super__ = parent.prototype;
 
+	return NewClass;
+};
+/**
+ * Includes a mixin into the current class.
+ * @param  {Object} props properties/methods include in this class
+ */
+Class.include = function (props) {
+	extend(this.prototype, props);
+};
 
+//TODO https://github.com/scottcorgan/tiny-emitter
 
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_client_Map.js.html">core/client/Map.js</a>, <a href="core_client_Map.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
+//TODO include https://github.com/jeromeetienne/microevent.js/blob/master/package.json
 
 
 
 
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+</code></pre>
+        </article>
+    </section>
 
 
 

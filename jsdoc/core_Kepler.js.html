@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: Map</title>
+    <title>JSDoc: Source: core/Kepler.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,130 +17,63 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: Map</h1>
+    <h1 class="page-title">Source: core/Kepler.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var version = '1.6.0';
+/**
+ * @namespace
+ * @name Kepler
+ */
+Kepler = {
+	/**
+	 * @constant
+	 * @type {String}
+	 */
+	version: version,
+	/**
+	 * extend global Kepler object
+	 * @param  {Object} e [description]
+	 * @return {Object}   [description]
+	 */
+	extend: function(e) {
+		return _.extend(this, e);
+	},
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Kepler wrapper for Leaflet map</div>
-        
+	//core models
+	Place: {},       //class for places                  (client)
+	User: {},        //class for users                   (client)
+	placeById: {},	 //constructor of Place  		     (client)
+	userById: {},	 //constructor of User  		     (client)
 
-        
-            
+	//config
+	schemas: {},	 //base data structure for models    (client,server)
+	filters: {},	 //specifiers for queries            (client,server)
+	templates: {},//positions for plugins templates   (client,server)
+	settings: {},	 //settings for core and plugins	 (client,server)
 
+	Util: {},        //module utils functions            (client,server)
+	Cache: {},       //module caching system             (client,server)
+	Plugin: {},		 //module for managing plugins		 (client,server)
 
+	//core modules
+	Profile: {},     //module for user logged data       (client)
+	Map: {},         //module map, controls, layers      (client)
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="core_client_Map.js.html">core/client/Map.js</a>, <a href="core_client_Map.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+/**
+ * @global
+ */
+K = Kepler;
+</code></pre>
+        </article>
+    </section>
 
 
 
