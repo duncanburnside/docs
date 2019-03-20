@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://docs.keplerjs.io/production.html</loc>
+    
+    <lastmod>2019-03-20T13:45:59.261Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://docs.keplerjs.io/deployment.html</loc>
     
-    <lastmod>2019-03-15T14:32:07.431Z</lastmod>
+    <lastmod>2019-03-20T13:45:44.025Z</lastmod>
     
   </url>
   
@@ -19,13 +26,6 @@
     <loc>http://docs.keplerjs.io/schemas.html</loc>
     
     <lastmod>2019-03-15T12:01:01.407Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://docs.keplerjs.io/configurations.html</loc>
-    
-    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
   </url>
   
@@ -79,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://docs.keplerjs.io/architecture.html</loc>
+    <loc>http://docs.keplerjs.io/package-lib.html</loc>
     
     <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://docs.keplerjs.io/package-ui.html</loc>
+    <loc>http://docs.keplerjs.io/architecture.html</loc>
     
     <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
@@ -156,7 +156,14 @@
   </url>
   
   <url>
-    <loc>http://docs.keplerjs.io/package-lib.html</loc>
+    <loc>http://docs.keplerjs.io/configurations.html</loc>
+    
+    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://docs.keplerjs.io/package-ui.html</loc>
     
     <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     

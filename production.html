@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 
     <!-- Basic -->
-    <title>Deployment</title>
+    <title>Production</title>
     <meta name="description" content="The open source full-stack geosocial network platform">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="images/favicon.ico" sizes="16x16 32x32 64x64">
@@ -12,12 +12,12 @@
     <!-- Social -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="http://docs.keplerjs.io">
-    <meta property="og:title" content="Deployment">
+    <meta property="og:title" content="Production">
     <meta property="og:description" content="The open source full-stack geosocial network platform">
     <meta property="og:image" content="images/logo-300.png">
     <meta name="twitter:card" content="summary_image_large">
     <meta name="twitter:site" content="@kepler_js">
-    <meta name="twitter:title" content="Deployment">
+    <meta name="twitter:title" content="Production">
     <meta name="twitter:description" content="The open source full-stack geosocial network platform">
     <meta name="twitter:image" content="images/logo-300.png">
 
@@ -150,8 +150,8 @@
               </li>
             
               
-              <li class="item-toc  current">
-                <a href="" class="sidebar-link  current">
+              <li class="item-toc ">
+                <a href="deployment.html" class="sidebar-link ">
                   <span>Deployment</span>
                 </a>
               </li>
@@ -328,13 +328,13 @@
 <div class="content">
   <div class="content-wrapper">
     <div class="header-content">
-      <h1 class="title-page">Deployment</h1>
+      <h1 class="title-page">Production</h1>
       
 
 
       <div class="page-actions">
         <div class="actions-group">
-          <a class="btn tertiary small round lowercase" href="https://github.com/keplerjs/docs/tree/master/docs/deployment.md" target="_blank">
+          <a class="btn tertiary small round lowercase" href="https://github.com/keplerjs/docs/tree/master/docs/production.md" target="_blank">
           	<span class="icon-github"></span> 
           	<span>Edit on GitHub</span>
           </a>
@@ -345,47 +345,10 @@
     </div>
 
     <div class="document-formatting">
-      <h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><p>Being KeplerJs a framework built above MeteorJs the system requirements are the same, so please refer to the documentation relating to meteorjs, in addition the steps to follow for a correct empty installation are the following</p>
-<h4 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h4><ul>
-<li>CPU ÷3GHz, &gt;2 cores, &gt;5K bogomips</li>
-<li>RAM &gt;2GB(required ÷800MB of free RAM for build process).</li>
-<li>Disk Usage kepler installed + libraries min ÷400MB, empty database with minimal collections min ÷500MB</li>
-</ul>
-<h4 id="System-software"><a href="#System-software" class="headerlink" title="System software"></a>System software</h4><p>from root:<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install curl git build-essential htop<span class="built_in"> screen </span>imagemagick</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>database MongoDB(versions 3.x)<br>from root:</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">install</span> mongodb mongo-tools</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>NodeJs (versions 6.x/8.x/10.x)<br>from root:</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL http<span class="variable">s:</span>//<span class="keyword">deb</span>.nodesource.<span class="keyword">com</span>/setup_10.<span class="keyword">x</span> -<span class="keyword">o</span> ./nodesource_setup.<span class="keyword">sh</span></span><br><span class="line">apt <span class="keyword">update</span></span><br><span class="line">apt install nodejs</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MeteorJs(latest version)<br>from root:</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http<span class="variable">s:</span>//install.meteor.<span class="keyword">com</span>/ | <span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Environment-variables"><a href="#Environment-variables" class="headerlink" title="Environment variables"></a>Environment variables</h4><p>Alternatively use the <a href="https://github.com/Keplerjs/Kepler/tree/master/private/build.sh" target="_blank" rel="external">build.sh</a> script.<br>The following environment variables are required:<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MONGO_URL=<span class="string">"mongodb://localhost:27017/&lt;DBNAME&gt;"</span></span><br><span class="line">MAIL_URL=<span class="string">"smtp://localhost:25"</span></span><br><span class="line">METEOR_SETTINGS=<span class="variable">$(cat settings.json)</span></span><br><span class="line">ROOT_URL=<span class="string">"http://&lt;APPDOMAIN&gt;"</span></span><br><span class="line">BIND_IP=&lt;IPADDRESS&gt;</span><br><span class="line">PORT=&lt;PORT&gt;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Scripts-and-Configurations"><a href="#Scripts-and-Configurations" class="headerlink" title="Scripts and Configurations"></a>Scripts and Configurations</h2><p>The directory <a href="https://github.com/Keplerjs/Kepler/tree/master/private" target="_blank" rel="external">/private</a>                         contains usefull scripts and configurations for development/production environments:</p>
-<h4 id="Development-environment"><a href="#Development-environment" class="headerlink" title="Development environment"></a>Development environment</h4><ul>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/start.sh" target="_blank" rel="external">start.sh</a>                            start kepler in localhost for development</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/settings.light-ui" target="_blank" rel="external">settings.light-ui.json</a>    sample settings.json for minimal loading of kepler plugins templates</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/settings.sample.json" target="_blank" rel="external">settings.sample.json</a>    sample settings.json for standard kepler app</li>
-</ul>
-<h4 id="Development-of-plugins"><a href="#Development-of-plugins" class="headerlink" title="Development of plugins"></a>Development of plugins</h4><ul>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/packages.publish.sh" target="_blank" rel="external">packages.publish.sh</a>        publish in atmospherejs.com all kepler plugins in github organization</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/packages.pull.sh" target="_blank" rel="external">packages.pull.sh</a>            pull all kepler plugins</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/packages.push.sh" target="_blank" rel="external">packages.push.sh</a>            push all kepler plugins</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/packages.status.sh" target="_blank" rel="external">packages.status.sh</a>        git staus in all kepler plugins</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/packages.unpublish.sh" target="_blank" rel="external">packages.unpublish.sh</a>    unpublish all kepler plugins in atmospherejs.com</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/placeholders.list.sh" target="_blank" rel="external">placeholders.list.sh</a>    find all placeholders defined in all templates</li>
-</ul>
-<h4 id="Production-environment"><a href="#Production-environment" class="headerlink" title="Production environment"></a>Production environment</h4><ul>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/build.sh" target="_blank" rel="external">build.sh</a>                            create meteor bundle, a standard NodeJs application of a kepler instance</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/kepler.daemon.sh" target="_blank" rel="external">kepler.daemon.sh</a>            run production kepler instance at startup in linux systems</li>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/nginx.sample.conf" target="_blank" rel="external">nginx.sample.conf</a>            sample configuration for use nginx as web server proxy</li>
-</ul>
-<h4 id="Cloud-deployments"><a href="#Cloud-deployments" class="headerlink" title="Cloud deployments"></a>Cloud deployments</h4><ul>
-<li><a href="https://github.com/Keplerjs/Kepler/tree/master/private/deploy.heroku.sh" target="_blank" rel="external">deploy.heroku.sh</a>            deploy kepler instance in herokuapp.com</li>
-</ul>
+      <h2 id="Building"><a href="#Building" class="headerlink" title="Building"></a>Building</h2><p>To preparing for production environment following the guidelines of meteor applications, the complete documentation is available here<br><a href="https://guide.meteor.com/deployment.html" target="_blank" rel="external">Meteor deployment docs</a></p>
+<p>For custom environment, run this command to create a generic NodeJS bundle<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meteor build --directory <span class="tag">&lt;<span class="name">build-output-directory</span>&gt;</span> --server=<span class="tag">&lt;<span class="name">host</span>&gt;</span>:<span class="tag">&lt;<span class="name">port</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><em>host</em> and <em>port</em> should be the public address of the server you want your app to connect to. This will generate a directory at <em>build-output-directory</em>, which includes a server bundle directory and the project source for each targeted mobile platform in the /ios and /android directories.</p>
+<p>To run main.js file using nodejs command:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodejs <span class="tag">&lt;<span class="name">build-output-directory</span>&gt;</span>/main.js</span><br></pre></td></tr></table></figure></p>
 
     </div>
   </div>
@@ -394,18 +357,11 @@
     <div class="content-wrapper">
       
       
-        <a class="link primary prev"
-          href="quick-start.html">
-          <span class="icon-arrow-left-alt"></span>
-          <span class="subtitle-pagination">Previous</span>
-          Quick Start
-        </a>
-      
       
         <a class="link primary next"
-          href="settings.html">
+          href="index.html">
           <span class="subtitle-pagination">Next</span>
-          Settings
+          Introduction
           <span class="icon-arrow-right-alt"></span>
         </a>
       
@@ -413,7 +369,7 @@
   </div>
 
 	<div class="github">
-		<a class="link tertiary " href="https://github.com/keplerjs/docs/tree/master/docs/deployment.md" target="_blank">
+		<a class="link tertiary " href="https://github.com/keplerjs/docs/tree/master/docs/production.md" target="_blank">
 			<span class="icon-github"></span>Edit on GitHub
 		</a>
 	</div>
@@ -441,7 +397,7 @@
 	<script>
 	
 	  var disqus_shortname = 'docs-keplerjs';
-	  var disqus_url = 'http://docs.keplerjs.io/deployment.html';
+	  var disqus_url = 'http://docs.keplerjs.io/production.html';
 	  
 	  (function(){
 	    var dsq = document.createElement('script');
