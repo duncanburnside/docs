@@ -351,17 +351,10 @@
 <li>RAM &gt;2GB(required ÷800MB of free RAM for build process).</li>
 <li>Disk Usage kepler installed + libraries min ÷400MB, empty database with minimal collections min ÷500MB</li>
 </ul>
-<h4 id="System-software"><a href="#System-software" class="headerlink" title="System software"></a>System software</h4><p>from root:<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install curl git build-essential htop<span class="built_in"> screen </span>imagemagick</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>database MongoDB(versions 3.x)<br>from root:</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">install</span> mongodb mongo-tools</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>NodeJs (versions 6.x/8.x/10.x)<br>from root:</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL http<span class="variable">s:</span>//<span class="keyword">deb</span>.nodesource.<span class="keyword">com</span>/setup_10.<span class="keyword">x</span> -<span class="keyword">o</span> ./nodesource_setup.<span class="keyword">sh</span></span><br><span class="line">apt <span class="keyword">update</span></span><br><span class="line">apt install nodejs</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MeteorJs(latest version)<br>from root:</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http<span class="variable">s:</span>//install.meteor.<span class="keyword">com</span>/ | <span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-</li>
+<h4 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h4><ul>
+<li>database MongoDB(versions 3.x)</li>
+<li>NodeJs (versions 6.x/8.x/10.x)</li>
+<li>MeteorJs(latest version)</li>
 </ul>
 <h2 id="Scripts-and-Configurations"><a href="#Scripts-and-Configurations" class="headerlink" title="Scripts and Configurations"></a>Scripts and Configurations</h2><p>The directory <a href="https://github.com/Keplerjs/Kepler/tree/master/private" target="_blank" rel="external">/private</a>                         contains usefull scripts and configurations for development/production environments:</p>
 <h4 id="Development-environment"><a href="#Development-environment" class="headerlink" title="Development environment"></a>Development environment</h4><ul>
