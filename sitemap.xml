@@ -4,7 +4,35 @@
   <url>
     <loc>http://docs.keplerjs.io/deployment.html</loc>
     
-    <lastmod>2019-03-20T13:50:26.366Z</lastmod>
+    <lastmod>2019-04-03T16:20:59.302Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://docs.keplerjs.io/index.html</loc>
+    
+    <lastmod>2019-04-03T16:20:09.546Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://docs.keplerjs.io/build.html</loc>
+    
+    <lastmod>2019-04-03T16:19:32.171Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://docs.keplerjs.io/contribute.html</loc>
+    
+    <lastmod>2019-04-03T16:19:32.171Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://docs.keplerjs.io/settings.html</loc>
+    
+    <lastmod>2019-04-03T16:19:32.171Z</lastmod>
     
   </url>
   
@@ -26,34 +54,6 @@
     <loc>http://docs.keplerjs.io/schemas.html</loc>
     
     <lastmod>2019-03-15T12:01:01.407Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://docs.keplerjs.io/faq.html</loc>
-    
-    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://docs.keplerjs.io/features.html</loc>
-    
-    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://docs.keplerjs.io/models.html</loc>
-    
-    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://docs.keplerjs.io/index.html</loc>
-    
-    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
   </url>
   
@@ -121,7 +121,7 @@
   </url>
   
   <url>
-    <loc>http://docs.keplerjs.io/contribute.html</loc>
+    <loc>http://docs.keplerjs.io/faq.html</loc>
     
     <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
@@ -142,7 +142,7 @@
   </url>
   
   <url>
-    <loc>http://docs.keplerjs.io/settings.html</loc>
+    <loc>http://docs.keplerjs.io/features.html</loc>
     
     <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
@@ -150,6 +150,13 @@
   
   <url>
     <loc>http://docs.keplerjs.io/templates.html</loc>
+    
+    <lastmod>2019-02-05T13:15:30.005Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://docs.keplerjs.io/models.html</loc>
     
     <lastmod>2019-02-05T13:15:30.005Z</lastmod>
     
